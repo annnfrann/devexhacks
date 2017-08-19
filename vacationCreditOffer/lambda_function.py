@@ -115,8 +115,14 @@ def set_destination(intent, session):
     session_attributes = session['attributes']
     should_end_session = False
 
-    if 'Destination' in intent['slots']:
-        destination = intent['slots']['Destination']['value']
+    destination = ''
+    if intent['slots']['US_cities'].get('value'):
+        destination = intent['slots']['US_cities']['value']
+
+    if intent['slots']['countries'].get('value'):
+        destination = intent['slots']['countries']['value']
+
+    if destination:
         session_attributes = {'destination': destination}
 
         # TODO get best CC
@@ -133,37 +139,31 @@ def set_destination(intent, session):
                                 reprompt_text, should_end_session)
 
 
-def learn_more(intent, session):
-    card_title = intent['name']
-    session_attributes = session['attributes']
-    should_end_session = False
-
-    speech_output = "With the Venture one card, you can earn 1.25 miles per dollar. " \
-                    ". Would you like to apply or proceed? "
-    reprompt_text = "Would you like to apply or proceed? "
-    
-    return build_alexa_response(session_attributes, card_title, speech_output,
-                                reprompt_text, should_end_session)
-    
-
 def get_prequalified(intent, session):
     card_title = intent['name']
     session_attributes = session['attributes']
     should_end_session = False
 
-    speech_output = "Great! I will need your First and last name, home address and tax number."
-    reprompt_text = "I will need your First and last name, home address and tax number."
+    # set     session_attributes = {}
+    
+    #speech_output = "Great! I will need your First and last name, home address and tax number."
+    #reprompt_text = "I will need your First and last name, home address and tax number."
 
+    speech_output = "if you want to hear about your prequalified order please say i want to hear my offer, otherwise say just book it"
+    reprompt_text = "filler"
+    
     return build_alexa_response(session_attributes, card_title, speech_output,
                                 reprompt_text, should_end_session)
 
 
-def apply(intent, session):
+def hear_offer(intent, session):
     card_title = intent['name']
     session_attributes = session['attributes']
     should_end_session = False
 
-    speech_output = "Thank you we be done"
+    # If prequailified 
+    
+    speech_output = "Great news cool stuff here from capital one. CHeck your email"
     reprompt_text = "Mic drop."
 
     return build_alexa_response(session_attributes, card_title, speech_output,
