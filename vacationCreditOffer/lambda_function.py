@@ -91,9 +91,9 @@ def get_welcome_response():
     session_attributes = {}
 
     card_title = "Welcome"
-    speech_output = "Welcome to . " \
-                    "Please tell me ... by saying, ... "
-    reprompt_text = "Please tell me ... by saying, ... "
+    speech_output = "Where are you looking to go. " \
+                    "Please tell me by saying a location. "
+    reprompt_text = "Please tell me where you want to go?. "
     should_end_session = False
 
     return build_alexa_response(session_attributes, card_title, speech_output,
@@ -127,9 +127,9 @@ def set_destination(intent, session):
 
         # TODO get best CC
         speech_output = " Based on flight information to " + destination + \
-                        ". you may qualify for a Capital one Venture one card. " \
-                        "Would you like to learn more or proceed with booking?"
-        reprompt_text = "Would you like to learn more or proceed with booking?"
+                        ". you may qualify for a Capital one card. " \
+                        "Would you like to apply or proceed with booking?"
+        reprompt_text = "Would you like to apply or proceed with booking?"
     else:
         speech_output = "I'm not sure where you want to go. " \
                         "Please try again."
@@ -145,12 +145,9 @@ def get_prequalified(intent, session):
     should_end_session = False
 
     # set     session_attributes = {}
-    
-    #speech_output = "Great! I will need your First and last name, home address and tax number."
-    #reprompt_text = "I will need your First and last name, home address and tax number."
-
-    speech_output = "if you want to hear about your prequalified order please say i want to hear my offer, otherwise say just book it"
-    reprompt_text = "filler"
+   
+    speech_output = "Would you like to hear your pre qualified offers or proceed with booking?,"
+    reprompt_text = "Would you like to hear your pre qualified offers or proceed with booking?"
     
     return build_alexa_response(session_attributes, card_title, speech_output,
                                 reprompt_text, should_end_session)
