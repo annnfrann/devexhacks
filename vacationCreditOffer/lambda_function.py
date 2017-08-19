@@ -60,6 +60,10 @@ def on_intent(intent_request, session):
     # Dispatch to your skill's intent handlers
     if intent_name == "AddDestination":
         return set_destination(intent, session)
+    elif intent_name == "LearnMore":
+        return learn_more(intent, session)
+    elif intent_name == "GetPrequalified":
+        return get_prequalified(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
@@ -127,6 +131,30 @@ def set_destination(intent, session):
                                 reprompt_text, should_end_session)
 
 
+def learn_more(intent, session):
+    card_title = intent['name']
+    session_attributes = session['attributes']
+    should_end_session = False
+
+    speech_output = "..."
+    reprompt_text = "..."
+    
+    return build_alexa_response(session_attributes, card_title, speech_output,
+                                reprompt_text, should_end_session)
+    
+    
+def get_prequalified(intent, session):
+    card_title = intent['name']
+    session_attributes = session['attributes']
+    should_end_session = False
+
+    speech_output = "..."
+    reprompt_text = "..."
+
+    return build_alexa_response(session_attributes, card_title, speech_output,
+                                reprompt_text, should_end_session)
+
+
 # --------------- Helpers that build all of the responses ----------------------
 
 def build_alexa_response(session_attributes, title, output, reprompt_text, should_end_session):
@@ -153,4 +181,3 @@ def build_alexa_response(session_attributes, title, output, reprompt_text, shoul
         'sessionAttributes': session_attributes,
         'response': speechlet_response
     }
-
