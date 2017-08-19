@@ -117,8 +117,8 @@ def set_destination(intent, session):
     """
 
     card_title = intent['name']
-    
-    if session.get('attributes')
+
+    if session.get('attributes'):
         session_attributes = session['attributes']
     else:
         session_attributes = {}
@@ -189,7 +189,8 @@ def get_prequalified(intent, session):
     if answer.json()['isPrequalified']:
         pname = answer.json()['products'][0]['productName']
         terms = answer.json()['products'][0]['terms']['purchaseAprTerms'].rstrip()
-
+        benefit = answer.json()['products'][0]['terms']['primaryBenefit'].rstrip()
+        session['benefits'] = benefit
         pname = pname[0:pname.find('<')]
         speech_output = 'Congratulations you are prequalified for the following card: '
         speech_output += pname + ' that has ' + terms
@@ -208,7 +209,8 @@ def tell_me_more(intent, session):
     session_attributes = session['attributes']
     should_end_session = True
 
-    speech_output = 'more info here'
+    speech_output = 'The primary benefit of this card is: ' + session['benefits']
+    speech_output +=  '. An email will be sent with the application details. Enjoy your trip'
     reprompt_text = None
 
     content = 'Goodbye'
