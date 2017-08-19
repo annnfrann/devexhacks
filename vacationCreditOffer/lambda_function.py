@@ -118,10 +118,10 @@ def set_destination(intent, session):
         session_attributes = {'destination': destination}
 
         # TODO get best CC
-        speech_output = "You are booked for " + destination + \
-                        ". I found a credit card you are pre-qualified for that " \
-                        "gives miles as rewards, would you like to apply?"
-        reprompt_text = "You ..."
+        speech_output = " Based on flight information to " + destination + \
+                        ". you may qualify for a Captialone Venture one card. " \
+                        "Would you like to learn more or proceed with booking?"
+        reprompt_text = "Would you like to learn more or proceed with booking?"
     else:
         speech_output = "I'm not sure where you want to go. " \
                         "Please try again."
@@ -136,8 +136,10 @@ def learn_more(intent, session):
     session_attributes = session['attributes']
     should_end_session = False
 
-    speech_output = "..."
-    reprompt_text = "..."
+    speech_output = "With the Venture one card, you can earn 1.25 miles per dollar. " \
+                    ". Would you like to apply or proceed? "
+    reprompt_text = "Would you like to apply or proceed? "
+"
     
     return build_alexa_response(session_attributes, card_title, speech_output,
                                 reprompt_text, should_end_session)
@@ -148,8 +150,8 @@ def get_prequalified(intent, session):
     session_attributes = session['attributes']
     should_end_session = False
 
-    speech_output = "..."
-    reprompt_text = "..."
+    speech_output = "Great! I will need your First and last name, home address and tax number."
+    reprompt_text = "I will need your First and last name, home address and tax number."
 
     return build_alexa_response(session_attributes, card_title, speech_output,
                                 reprompt_text, should_end_session)
