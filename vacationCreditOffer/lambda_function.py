@@ -163,7 +163,7 @@ def get_prequalified(intent, session):
 
     # if prequalify
     token = co_getToken()
-    data = dict(firstName=session_attributes['name'], taxId=session_attributes['ssn'])
+    data = dict(firstName=session_attributes['name'], taxId=str(session_attributes['ssn']))
     answer = co_getPreQualify(token, data)
     # If prequailified
     speech_output = "Sorry, you are not prequalified"
@@ -228,4 +228,3 @@ def co_getPreQualify(token,data):
     header['Content-Type'] = 'application/json;v=3'
     r = requests.post(url,json=data,headers=header)
     return r
-    
