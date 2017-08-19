@@ -62,6 +62,8 @@ def on_intent(intent_request, session):
         return set_destination(intent, session)
     elif intent_name == "LearnMore":
         return learn_more(intent, session)
+    elif intent_name == "ApplyForCredit":
+        return apply(intent, session)
     elif intent_name == "GetPrequalified":
         return get_prequalified(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
@@ -119,7 +121,7 @@ def set_destination(intent, session):
 
         # TODO get best CC
         speech_output = " Based on flight information to " + destination + \
-                        ". you may qualify for a Captialone Venture one card. " \
+                        ". you may qualify for a Capital one Venture one card. " \
                         "Would you like to learn more or proceed with booking?"
         reprompt_text = "Would you like to learn more or proceed with booking?"
     else:
@@ -139,12 +141,11 @@ def learn_more(intent, session):
     speech_output = "With the Venture one card, you can earn 1.25 miles per dollar. " \
                     ". Would you like to apply or proceed? "
     reprompt_text = "Would you like to apply or proceed? "
-"
     
     return build_alexa_response(session_attributes, card_title, speech_output,
                                 reprompt_text, should_end_session)
     
-    
+
 def get_prequalified(intent, session):
     card_title = intent['name']
     session_attributes = session['attributes']
@@ -152,6 +153,18 @@ def get_prequalified(intent, session):
 
     speech_output = "Great! I will need your First and last name, home address and tax number."
     reprompt_text = "I will need your First and last name, home address and tax number."
+
+    return build_alexa_response(session_attributes, card_title, speech_output,
+                                reprompt_text, should_end_session)
+
+
+def apply(intent, session):
+    card_title = intent['name']
+    session_attributes = session['attributes']
+    should_end_session = False
+
+    speech_output = "Thank you we be done"
+    reprompt_text = "Mic drop."
 
     return build_alexa_response(session_attributes, card_title, speech_output,
                                 reprompt_text, should_end_session)
