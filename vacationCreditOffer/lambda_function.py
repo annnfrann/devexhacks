@@ -216,15 +216,16 @@ def build_alexa_response(session_attributes, title, output, reprompt_text, shoul
 
 
 def co_getToken():
-    url = 'http://api.devexhacks.com/oauth2/token'
-    data = dict(client_id='fbb4e0ead1e84364bc0907fd26ababaf', client_secret='2f459207c8c32d96fb51e4db3fa0009e')
-    data['grant_type'] = 'client_credentials'
-    r = requests.get(url, data)
+    url = 'https://api.devexhacks.com/oauth2/token'
+    data = dict(client_id='vgw3sf4f8nq3b98i1gdfr8wpx4gpty0ska52',client_secret='eb5f6rda6v0d1ld8y4fymkudo86gorrc47cj')
+    data['grant_type']='client_credentials'
+    r = requests.post(url,data = data)
     return r.json()['access_token']
 
-
-def co_getPreQualify(token, data):
+def co_getPreQualify(token,data):
     url = 'http://api.devexhacks.com/credit-offers/prequalifications'
-    header = dict(Authorization='Bearer ' + token)
+    header = dict(Authorization= 'Bearer '+token)
     header['Content-Type'] = 'application/json;v=3'
-    r = requests.post(url, json=data, headers=header)
+    r = requests.post(url,json=data,headers=header)
+    return r
+    
