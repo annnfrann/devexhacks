@@ -93,9 +93,9 @@ def get_welcome_response():
     session_attributes = {}
 
     card_title = "Welcome"
-    content = 'Where do you want to go?'
+    content = '... planning a vacation...'
     image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
-    speech_output = "Where are you looking to go."
+    speech_output = "Where do you want to go?."
     reprompt_text = "Please tell me where you want to go?. "
     should_end_session = False
 
@@ -160,7 +160,7 @@ def apply(intent, session):
     speech_output = "Please give me your tax id number,"
     reprompt_text = "I need your tax id numbner to continue."
 
-    content = 'Tell me your Tax Id'
+    content = 'reaching out to CapitalOne...'
     image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
 
     return build_alexa_response(session_attributes, card_title, speech_output,
@@ -184,7 +184,7 @@ def get_prequalified(intent, session):
     # If prequailified
 
     speech_output = "Sorry, you are not prequalified"
-    content = 'SORRY'
+    content = 'Sorry'
     image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
     if answer.json()['isPrequalified']:
         pname = answer.json()['products'][0]['productName']
@@ -194,7 +194,7 @@ def get_prequalified(intent, session):
         speech_output = 'Congratulations you are prequalified for the following card: '
         speech_output += pname + ' that has ' + terms
 
-        content = 'Yay'
+        content = 'Congratulations!'
         image_url = 'https://thepointsguy.com/wp-content/uploads/2017/05/quicksilver-redesign5b25d5b15d.jpg'
 
     reprompt_text = None
