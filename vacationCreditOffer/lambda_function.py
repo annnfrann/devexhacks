@@ -168,9 +168,10 @@ def get_prequalified(intent, session):
     # If prequailified
     speech_output = "Sorry, you are not prequalified"
     if answer.json()['isPrequalified']:
-        speech_output = "Congratulations you are prequalified for the following card:"
-        speech_output += " " + answer.json()['productName'] + ' that has ' + \
-                         answer.json()['purchaseAprTerms']
+        speech_output = 'Congratulations you are prequalified for the following card: '
+        speech_output += answer.json()['products'][0]['productName'] + ' that has ' + \
+                         answer.json()['products'][0]['terms']['purchaseAprTerms']
+
 
     reprompt_text = "meh"
 
