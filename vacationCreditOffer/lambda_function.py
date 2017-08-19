@@ -195,7 +195,7 @@ def get_prequalified(intent, session):
         speech_output = 'Congratulations you are prequalified for the following card: '
         speech_output += pname + ' that has ' + terms
 
-        content = 'Congratulations!'
+        content = 'QuicksilverOne From Capital One'
         image_url = 'https://thepointsguy.com/wp-content/uploads/2017/05/quicksilver-redesign5b25d5b15d.jpg'
 
     reprompt_text = None
@@ -213,7 +213,7 @@ def tell_me_more(intent, session):
     speech_output +=  '. An email will be sent with the application details. Enjoy your trip'
     reprompt_text = None
 
-    content = 'Goodbye'
+    content = '1.5% Cash Back on Every Purchase'
     image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
 
     return build_alexa_response(session_attributes, card_title, speech_output,
