@@ -166,11 +166,15 @@ def get_prequalified(intent, session):
     data = dict(firstName=session_attributes['name'], taxId=str(session_attributes['ssn']))
     answer = co_getPreQualify(token, data)
     # If prequailified
+
     speech_output = "Sorry, you are not prequalified"
     if answer.json()['isPrequalified']:
+        pname = answer.json()['products'][0]['productName']
+        terms = answer.json()['products'][0]['terms']['purchaseAprTerms'].rstrip()
+
+        pname = pname[0:pname.find('<')]
         speech_output = 'Congratulations you are prequalified for the following card: '
-        speech_output += answer.json()['products'][0]['productName'] + ' that has ' + \
-                         answer.json()['products'][0]['terms']['purchaseAprTerms']
+        speech_output += pname + ' that has ' + terms
 
 
     reprompt_text = "meh"
