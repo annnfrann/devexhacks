@@ -3,7 +3,7 @@
 """
 
 from __future__ import print_function
-
+import requests
 
 # --------------- Main handler ------------------
 
@@ -145,10 +145,10 @@ def get_prequalified(intent, session):
     should_end_session = False
 
     # set     session_attributes = {}
-   
+
     speech_output = "Would you like to hear your pre qualified offers or proceed with booking?,"
     reprompt_text = "Would you like to hear your pre qualified offers or proceed with booking?"
-    
+
     return build_alexa_response(session_attributes, card_title, speech_output,
                                 reprompt_text, should_end_session)
 
@@ -157,10 +157,17 @@ def hear_offer(intent, session):
     card_title = intent['name']
     session_attributes = session['attributes']
     should_end_session = False
+    token = co_getToken()
+    data = dict(firstName = session_attributes['name'], taxId = session_attributes['ssn'])
+    answer = co_getPreQualify(token,data)
+    # If prequailified
+    speech_output = "Sorry, you are not prequalified"
+    if answer.json()['isPrequalified']:
+        speech_output = "Congratulations you are prequalified for the following card:"
+        speech_output += " " + answer.json()['productName'] + ' that has ' + \
+            answer.json()['purchaseAprTerms']
 
-    # If prequailified 
-    
-    speech_output = "Great news cool stuff here from capital one. CHeck your email"
+
     reprompt_text = "Mic drop."
 
     return build_alexa_response(session_attributes, card_title, speech_output,
@@ -193,3 +200,16 @@ def build_alexa_response(session_attributes, title, output, reprompt_text, shoul
         'sessionAttributes': session_attributes,
         'response': speechlet_response
     }
+
+def co_getToken():
+    url = 'http://api.devexhacks.com/oauth2/token'
+    data = dict(client_id='fbb4e0ead1e84364bc0907fd26ababaf',client_secret='2f459207c8c32d96fb51e4db3fa0009e')
+    data['grant_type']='client_credentials'
+    r = requests.get(url,data)
+    return r.json()['access_token']
+
+def co_getPreQualify(token,data):
+    url = 'http://api.devexhacks.com/credit-offers/prequalifications'
+    header = dict(Authorization= 'Bearer '+token)
+    header['Content-Type'] = 'application/json;v=3'
+    r = requests.post(url,json=data,headers=header)
