@@ -1,0 +1,93 @@
+{
+  "intents": [
+    {
+      "name": "AddDestination",
+      "samples": [
+        "i want to go to {US_cities}",
+        "i want to go to {countries}",
+        "{US_cities}",
+        "{countries}"
+      ],
+      "slots": [
+        {
+          "name": "US_cities",
+          "type": "AMAZON.US_CITY",
+          "samples": []
+        },
+        {
+          "name": "countries",
+          "type": "AMAZON.Country",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "AMAZON.CancelIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.HelpIntent",
+      "samples": []
+    },
+    {
+      "name": "AMAZON.StopIntent",
+      "samples": []
+    },
+    {
+      "name": "Apply",
+      "samples": [
+        "apply"
+      ],
+      "slots": []
+    },
+    {
+      "name": "GetSocial",
+      "samples": [
+        "My tax id is {ssn}",
+        "{ssn}"
+      ],
+      "slots": [
+        {
+          "name": "ssn",
+          "type": "SSN",
+          "samples": []
+        }
+      ]
+    },
+    {
+      "name": "HearOffer",
+      "samples": [
+        "I want to hear the offer"
+      ],
+      "slots": []
+    }
+  ],
+  "types": [
+    {
+      "name": "SSN",
+      "values": [
+        {
+          "id": null,
+          "name": {
+            "value": "888888888",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "999999999",
+            "synonyms": []
+          }
+        },
+        {
+          "id": null,
+          "name": {
+            "value": "123456789",
+            "synonyms": []
+          }
+        }
+      ]
+    }
+  ]
+}
