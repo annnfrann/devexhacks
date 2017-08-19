@@ -20,8 +20,8 @@ def lambda_handler(event, context):
           event['session']['application']['applicationId'])
 
     if event['session']['new']:
-        on_session_started({'requestId': event['request']['requestId']},
-                           event['session'])
+        event['session']['attributes'] = {}
+        on_session_started({'requestId': event['request']['requestId']}, event['session'])
 
     if event['request']['type'] == "LaunchRequest":
         return on_launch(event['request'], event['session'])
@@ -91,8 +91,7 @@ def get_welcome_response():
     session_attributes = {}
 
     card_title = "Welcome"
-    speech_output = "Where are you looking to go. " \
-                    "Please tell me by saying a location. "
+    speech_output = "Where are you looking to go."
     reprompt_text = "Please tell me where you want to go?. "
     should_end_session = False
 
@@ -112,7 +111,9 @@ def set_destination(intent, session):
     """
 
     card_title = intent['name']
+    print('session  ## : ' + str(session))
     session_attributes = session['attributes']
+
     should_end_session = False
 
     destination = ''
@@ -176,21 +177,21 @@ def get_prequalified(intent, session):
         speech_output = 'Congratulations you are prequalified for the following card: '
         speech_output += pname + ' that has ' + terms
 
-
-    reprompt_text = "meh"
+    reprompt_text = None
 
     return build_alexa_response(session_attributes, card_title, speech_output,
                                 reprompt_text, should_end_session)
 
-
-"""
+def tell_me_more(intent, session):
+    card_title = intent['name']
     session_attributes = session['attributes']
-    should_end_session = False
-    token = co_getToken()
-    data = dict(firstName = session_attributes['name'], taxId = session_attributes['ssn'])
-    answer = co_getPreQualify(token,data)
-"""
+    should_end_session = True
 
+    speech_output = 'more info here'
+    reprompt_text = None
+
+    return build_alexa_response(session_attributes, card_title, speech_output,
+                                reprompt_text, should_end_session)
 
 # --------------- Helpers that build all of the responses ----------------------
 
