@@ -66,6 +66,8 @@ def on_intent(intent_request, session):
         return apply(intent, session)
     elif intent_name == "GetSocial":
         return get_prequalified(intent, session)
+    elif intent_name == "FindOutMore":
+        return tell_me_more(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
@@ -91,19 +93,23 @@ def get_welcome_response():
     session_attributes = {}
 
     card_title = "Welcome"
+    content = 'Where do you want to go?'
+    image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
     speech_output = "Where are you looking to go."
     reprompt_text = "Please tell me where you want to go?. "
     should_end_session = False
 
     return build_alexa_response(session_attributes, card_title, speech_output,
-                                reprompt_text, should_end_session)
+                                reprompt_text, should_end_session, content, image_url)
 
 
 def handle_session_end_request():
     card_title = "Session Ended"
     speech_output = "Thank you for trying ... "
     should_end_session = True
-    return build_alexa_response({}, card_title, speech_output, None, should_end_session)
+    content = 'end'
+    image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
+    return build_alexa_response({}, card_title, speech_output, None, should_end_session, content, image_url)
 
 
 def set_destination(intent, session):
@@ -111,8 +117,11 @@ def set_destination(intent, session):
     """
 
     card_title = intent['name']
-    print('session  ## : ' + str(session))
-    session_attributes = session['attributes']
+    
+    if session.get('attributes')
+        session_attributes = session['attributes']
+    else:
+        session_attributes = {}
 
     should_end_session = False
 
@@ -136,8 +145,11 @@ def set_destination(intent, session):
                         "Please try again."
         reprompt_text = "You can tell me your destination by saying, " \
                         "I want to go to New Zealand."
+
+    content = destination
+    image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
     return build_alexa_response(session_attributes, card_title, speech_output,
-                                reprompt_text, should_end_session)
+                                reprompt_text, should_end_session, content, image_url)
 
 
 def apply(intent, session):
@@ -148,8 +160,11 @@ def apply(intent, session):
     speech_output = "Please give me your tax id number,"
     reprompt_text = "I need your tax id numbner to continue."
 
+    content = 'Tell me your Tax Id'
+    image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
+
     return build_alexa_response(session_attributes, card_title, speech_output,
-                                reprompt_text, should_end_session)
+                                reprompt_text, should_end_session, content, image_url)
 
 
 # User give SSN
@@ -169,6 +184,8 @@ def get_prequalified(intent, session):
     # If prequailified
 
     speech_output = "Sorry, you are not prequalified"
+    content = 'SORRY'
+    image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
     if answer.json()['isPrequalified']:
         pname = answer.json()['products'][0]['productName']
         terms = answer.json()['products'][0]['terms']['purchaseAprTerms'].rstrip()
@@ -177,10 +194,14 @@ def get_prequalified(intent, session):
         speech_output = 'Congratulations you are prequalified for the following card: '
         speech_output += pname + ' that has ' + terms
 
+        content = 'Yay'
+        image_url = 'https://thepointsguy.com/wp-content/uploads/2017/05/quicksilver-redesign5b25d5b15d.jpg'
+
     reprompt_text = None
 
+
     return build_alexa_response(session_attributes, card_title, speech_output,
-                                reprompt_text, should_end_session)
+                                reprompt_text, should_end_session, content, image_url)
 
 def tell_me_more(intent, session):
     card_title = intent['name']
@@ -190,12 +211,15 @@ def tell_me_more(intent, session):
     speech_output = 'more info here'
     reprompt_text = None
 
+    content = 'Goodbye'
+    image_url = 'https://s3.amazonaws.com/capitalexaphoto/IMG_20170819_143730+(1).jpg'
+
     return build_alexa_response(session_attributes, card_title, speech_output,
-                                reprompt_text, should_end_session)
+                                reprompt_text, should_end_session, content, image_url)
 
 # --------------- Helpers that build all of the responses ----------------------
 
-def build_alexa_response(session_attributes, title, output, reprompt_text, should_end_session):
+def build_alexa_response(session_attributes, title, output, reprompt_text, should_end_session, content, image_url):
     speechlet_response = {
         'outputSpeech': {
             'type': 'PlainText',
@@ -203,8 +227,11 @@ def build_alexa_response(session_attributes, title, output, reprompt_text, shoul
         },
         'card': {
             'type': 'Simple',
-            'title': "SessionSpeechlet - " + title,
-            'content': "SessionSpeechlet - " + output
+            'title': title,
+            'content': content,
+            'image': {
+                'largeImageUrl': image_url
+            }
         },
         'reprompt': {
             'outputSpeech': {

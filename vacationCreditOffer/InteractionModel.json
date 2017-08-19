@@ -41,6 +41,14 @@
       "slots": []
     },
     {
+      "name": "FindOutMore",
+      "samples": [
+        "I want to hear the offer",
+        "find out more"
+      ],
+      "slots": []
+    },
+    {
       "name": "GetSocial",
       "samples": [
         "My tax id is {ssn}",
@@ -53,13 +61,6 @@
           "samples": []
         }
       ]
-    },
-    {
-      "name": "HearOffer",
-      "samples": [
-        "I want to hear the offer"
-      ],
-      "slots": []
     }
   ],
   "types": [
