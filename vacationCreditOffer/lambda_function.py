@@ -209,7 +209,7 @@ def tell_me_more(intent, session):
     session_attributes = session['attributes']
     should_end_session = True
 
-    speech_output = 'The primary benefit of this card is: ' + session['benefits']
+    speech_output = 'With this card you can earn unlimited 1.5% cash back on every purchase, every day'
     speech_output +=  '. An email will be sent with the application details. Enjoy your trip'
     reprompt_text = None
 
@@ -232,7 +232,7 @@ def build_alexa_response(session_attributes, title, output, reprompt_text, shoul
             'title': title,
             'content': content,
             'image': {
-                'largeImageUrl': image_url
+                'smallImageUrl': image_url
             }
         },
         'reprompt': {
